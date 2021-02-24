@@ -1,10 +1,10 @@
 package main
 
 import (
-	"360-richard-goluszka/sprint-2/coding-standards-validator-part-1/directorychk"
-	"360-richard-goluszka/sprint-2/coding-standards-validator-part-1/licensechk"
-	"360-richard-goluszka/sprint-2/coding-standards-validator-part-1/linefmtchk"
-	"360-richard-goluszka/sprint-2/coding-standards-validator-part-1/utf8chk"
+	"360-RedDragons/sprint-3/coding-standards-validator-part-2/directorychk"
+	"360-RedDragons/sprint-3/coding-standards-validator-part-2/licensechk"
+	"360-RedDragons/sprint-3/coding-standards-validator-part-2/linefmtchk"
+	"360-RedDragons/sprint-3/coding-standards-validator-part-2/utf8chk"
 	"bufio"
 	"fmt"
 	"os"
