@@ -46,7 +46,7 @@ func (lfc *LineFmtChecker) Validate() bool {
 			}
 			lfc.Path = tmpPath
 			continue
-		} else if strings.EqualFold(fi.Name(), `val.exe`) {
+		} else if strings.EqualFold(fi.Name(), `program.exe`) {
 			continue //skip executable
 		}
 
