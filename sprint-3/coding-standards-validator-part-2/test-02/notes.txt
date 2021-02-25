@@ -1,0 +1,15 @@
+This is an important file that should NOT be removed from this directory.
+
+REMEMBER: JetBrains Goland can be used as an alternative editor to VS Code!!
+
+COMMANDS TO RUN TESTS:
+	go test 		runs the test
+	go test -v		provides verbose output
+	go test -cover	displays the coverage percentage
+
+COMMANDS TO VISUALIZE COVERAGE:
+	go test -coverprofile=coverage.out					to build coverage file
+	go tool cover -html=coverage.out					to view coverage in browser
+	go tool cover -html=coverage.out -o coverage.html	to save coverage to .html file
+
+Hope you had fun taking the time to read this!

@@ -42,7 +42,7 @@ func (uc *UTF8Checker) Validate() bool {
 			}
 			uc.Path = tmpPath
 			continue
-		} else if strings.EqualFold(fi.Name(), `program.exe`) {
+		} else if strings.EqualFold(fi.Name(), `val.exe`) {
 			continue //skip executable
 		}
 

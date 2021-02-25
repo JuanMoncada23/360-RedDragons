@@ -1,0 +1,29 @@
+git init:
+	create a new git repository in the root of the current directory
+
+git status:
+	shows which files git knows to exist
+
+git add:
+	adds a file to the staging environment to be committed
+
+git commit -m "MESSAGE":
+	commit file changes and associate a mesage
+
+git checkout -b BRANCH_NAME:
+	create and move to a new branch
+
+git branch:
+	shows the branches in your project (* indicates current branch)
+
+git push origin BRANCH_NAME:
+	push changes onto a new branch on GitHub
+
+git revert COMMIT_HASH_#:
+	revert to the state of specified commit
+
+git pull origin master:
+	update local git repo with GitHub repo (from main branch)
+
+git checkout main:
+	switch to the main branch
