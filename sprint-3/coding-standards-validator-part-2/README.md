@@ -54,3 +54,13 @@ Execution instructions
 2. Run val.exe and specify path to project when prompted
 3. Optionally use `val.exe detail` to view detailed validation information
 4. Optionally use `val.exe help` to view help instructions
+
+
+Manual Test Instructions
+========================
+
+test-03
+-------
+1. Run `val` and give the path `coding-standards-validator-part-2/test-03`
+2. If only one validation fails, the test is considered a PASS
+3. Otherwise, the test is considered a FAIL
