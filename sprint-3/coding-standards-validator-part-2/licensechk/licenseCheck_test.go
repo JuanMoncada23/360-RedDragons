@@ -16,8 +16,17 @@ var lc []LicenseChecker = []LicenseChecker{
 	{Path: ".." + sep + "test-02"},
 	{Path: ".." + sep + "test-03"},
 	{Path: ".." + sep + "test-04"},
+	{Path: ".."}, 
 }
 
+func TestValidate00(t *testing.T) {
+	lc := lc[4]
+
+	result = lc.Validate()
+	retMsg = lc.GetMsg()
+	retIssue = lc.GetIssues()
+	retCt = lc.GetIssueCt()
+}
 func TestValidate01(t *testing.T) {
 	lc := lc[0]
 
