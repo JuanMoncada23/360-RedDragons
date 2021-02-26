@@ -19,6 +19,16 @@ var lfcs []LineFmtChecker = []LineFmtChecker{
 	{Path: `..` + sep + `test-02`},
 	{Path: `..` + sep + `test-03`},
 	{Path: `..` + sep + `test-04`},
+	{Path: `..`},
+}
+
+func TestValidate00(t *testing.T) {
+	lfc := lfcs[4]
+
+	result = lfc.Validate()
+	retMsg = lfc.GetMsg()
+	retIssue = lfc.GetIssues()
+	retCt = lfc.GetIssueCt()
 }
 
 //test on folder `test-01`, it should pass
