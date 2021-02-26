@@ -2,12 +2,25 @@ package utf8chk
 
 import "testing"
 
+var retCt int
+var retMsg, retIssue string
+var result bool
+
 var utftests = []UTF8Checker{
 UTF8Checker{Path: "../test-01"},
 UTF8Checker{Path: "../test-02"},
 UTF8Checker{Path: "../test-03"},
 UTF8Checker{Path: "../test-04"},
+UTF8Checker{Path: "."},
+}
 
+func TestValidate00(t *testing.T) {
+	utf := utftests[4]
+
+	result = utf.Validate()
+	retMsg = utf.GetMsg()
+	retIssue = utf.GetIssues()
+	retCt = utf.GetIssueCt()
 }
 
 func TestUTF8Checker_Validate(t *testing.T) {
