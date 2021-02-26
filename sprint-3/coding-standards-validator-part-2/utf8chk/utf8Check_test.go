@@ -14,7 +14,7 @@ func TestUTF8Checker_Validate(t *testing.T) {
 
 	for _, utf := range utftests {
 		if !utf.Validate() {
-			t.Log("Error not UTF8!")
+			t.Log("Error not UTF8! with ", utf.Path)
 			t.Fail()
 		}
 	}
