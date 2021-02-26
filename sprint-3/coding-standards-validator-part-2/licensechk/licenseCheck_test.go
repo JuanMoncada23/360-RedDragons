@@ -43,12 +43,8 @@ func TestValidate02(t *testing.T) {
 	retIssue = lc.GetIssues()
 	retCt = lc.GetIssueCt()
 
-	if !lc.Validate() {
-		t.Error("No License File")
-	}
-
-	if result == true || retMsg == `` || retIssue != `` || retCt != 0 {
-		t.Error("Expected false, got", result, "Excepted 0 issues, got", retCt)
+	if result == true || retMsg != `` || retIssue == `` || retCt == 0 {
+		t.Error("Expected false, got", result, "Excepted issues, got", retCt)
 	}
 }
 func TestValidate03(t *testing.T) {
@@ -59,16 +55,12 @@ func TestValidate03(t *testing.T) {
 	retIssue = lc.GetIssues()
 	retCt = lc.GetIssueCt()
 
-	if !lc.Validate() {
-		t.Error("No License File")
-	}
-
-	if result == true || retMsg == `` || retIssue != `` || retCt != 0 {
-		t.Error("Expected false, got", result, "Excepted 0 issues, got", retCt)
+	if result == false || retMsg == `` || retIssue != `` || retCt != 0 {
+		t.Error("Expected true, got", result, "Excepted 0 issues, got", retCt)
 	}
 }
 
-func TestValidate04( t *testing.T) {
+func TestValidate04(t *testing.T) {
 	lc := lc[3]
 
 	result = lc.Validate()
@@ -76,13 +68,7 @@ func TestValidate04( t *testing.T) {
 	retIssue = lc.GetIssues()
 	retCt = lc.GetIssueCt()
 
-	if !lc.Validate() {
-		t.Error("No License File")
-	}
-
-	if result == true || retMsg == `` || retIssue != `` || retCt != 0 {
+	if result == true || retMsg != `` || retIssue == `` || retCt == 0 {
 		t.Error("Expected false, got", result, "Excepted 0 issues, got", retCt)
 	}
 }
-
-
