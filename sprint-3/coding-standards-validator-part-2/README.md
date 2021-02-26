@@ -59,6 +59,13 @@ Execution instructions
 Manual Test Instructions
 ========================
 
+test-02
+-------
+1. Run `val` and give the path `coding-standards-validator-part-2/test-02`
+2. If all validations fail multiple times, the test is considered a PASS
+3. Otherwsie, the test is considered a FAIL
+_Note: The LicenseCheck Validator is incapable of failing multiple times._
+
 test-03
 -------
 1. Run `val` and give the path `coding-standards-validator-part-2/test-03`
