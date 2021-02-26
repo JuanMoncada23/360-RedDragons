@@ -59,6 +59,12 @@ Execution instructions
 Manual Test Instructions
 ========================
 
+test-01
+-------
+1. Run `val` and give the path `coding-standards-validator-part-2/test-02`
+2. If all validations return true the test is considered PASS
+3. Otherwsie, the test is considered a FAIL
+
 test-02
 -------
 1. Run `val` and give the path `coding-standards-validator-part-2/test-02`
