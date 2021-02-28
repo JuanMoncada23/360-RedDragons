@@ -82,10 +82,30 @@ test-03
 2. If only one validation fails, the test is considered a PASS
 3. Otherwise, the test is considered a FAIL
 
+test-04
+1. Run `val` and give the path `coding-standards-validator-part-3/test-04`
+2. If only one validation succeeds, the test is considered a pass
+3. Otherwise, the test is considered a FAIL
+
 Automated Testing Instructions
 ==============================
 
-linefmtchk
+dirCheck
+--------
+1. Naviagte to `coding-standards-validator-part-2/directorychk`
+2. Run `go test` with optional flags `-v` for verbose or `-cover` for coverage
+
+licenseCheck
+------------
+1. Naviagte to `coding-standards-validator-part-2/licensechk`
+2. Run `go test` with optional flags `-v` for verbose or `-cover` for coverage
+
+lineFmtChk
 ----------
 1. Navigate to `coding-standards-validator-part-2/linefmtchk`
+2. Run `go test` with optional flags `-v` for verbose or `-cover` for coverage
+
+utf8Check
+---------
+1. Naviagte to `coding-standards-validator-part-2/utf8chk`
 2. Run `go test` with optional flags `-v` for verbose or `-cover` for coverage
