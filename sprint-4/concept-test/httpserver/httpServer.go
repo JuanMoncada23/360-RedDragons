@@ -2,6 +2,7 @@ package main
 
 import (
 	"360-RedDragons/sprint-4/concept-test/quizjson"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -10,22 +11,35 @@ import (
 	"strings"
 )
 
-func info(res http.ResponseWriter, req *http.Request) {
-	//find JSON question banks to use
+var idFileMap map[string]string = make(map[string]string)
+
+func init() {
+	//open parent directory
 	files, err := ioutil.ReadDir(`..`)
 	if err != nil {
 		log.Fatal(`Error: couldn't read JSON directory`)
 	}
 
-	//find and collect all relevant JSON question banks
-	b := quizjson.Banks{}
+	//look for JSON question banks
 	for _, fi := range files {
 		if strings.Contains(fi.Name(), `.json`) {
+			//associate each bank id w/ filename in global map
 			filename := `..` + string(os.PathSeparator) + fi.Name()
-			/* jsonFiles = append(jsonFiles, fileName) */
 			e := quizjson.FromFile(filename)
-			b.Banks = append(b.Banks, quizjson.Bank{Name: e.Name, ID: e.ID, Count: len(e.Entries)})
+			idFileMap[e.ID] = filename
 		}
+	}
+	fmt.Println("done")
+}
+
+func info(res http.ResponseWriter, req *http.Request) {
+	defer req.Body.Close()
+
+	//collect all relevant JSON question banks
+	b := quizjson.Banks{}
+	for id, file := range idFileMap {
+		e := quizjson.FromFile(file)
+		b.Banks = append(b.Banks, quizjson.Bank{Name: e.Name, ID: id, Count: len(e.Entries)})
 	}
 
 	//return in JSON format
