@@ -34,7 +34,25 @@ func info(res http.ResponseWriter, req *http.Request) {
 }
 
 func hello(res http.ResponseWriter, req *http.Request) {
-	//read GET request
+	//read POST request
+	defer req.Body.Close()
+	msg, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Fatal(`Error: couldn't read POST request`)
+	}
+
+	//retrieve entries and convert to questions
+	e := quizjson.FromFile(`../bank-1.json`)
+	q := quizjson.Questions{}
+	for _, entry := range e.Entries {
+		q.Questions = append(q.Questions, entry.Question)
+	}
+
+	//return in JSON format
+	msg = q.ToJSON()
+	io.WriteString(res, string(msg))
+
+	/* //read GET request
 	defer req.Body.Close()
 
 	//retrieve entries
@@ -48,7 +66,7 @@ func hello(res http.ResponseWriter, req *http.Request) {
 
 	//return in JSON format
 	content := q.ToJSON()
-	io.WriteString(res, string(content))
+	io.WriteString(res, string(content)) */
 }
 
 func main() {
