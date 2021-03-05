@@ -24,7 +24,7 @@ func info(res http.ResponseWriter, req *http.Request) {
 			filename := `..` + string(os.PathSeparator) + fi.Name()
 			/* jsonFiles = append(jsonFiles, fileName) */
 			e := quizjson.FromFile(filename)
-			b.Banks = append(b.Banks, quizjson.Bank{e.Name, e.ID, len(e.Entries)})
+			b.Banks = append(b.Banks, quizjson.Bank{Name: e.Name, ID: e.ID, Count: len(e.Entries)})
 		}
 	}
 
@@ -35,6 +35,7 @@ func info(res http.ResponseWriter, req *http.Request) {
 
 func hello(res http.ResponseWriter, req *http.Request) {
 	//read GET request
+	defer req.Body.Close()
 
 	//retrieve entries
 	e := quizjson.FromFile(`../bank-1.json`)

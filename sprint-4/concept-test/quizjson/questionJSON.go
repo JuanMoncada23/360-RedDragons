@@ -30,7 +30,7 @@ func (q Question) String() string {
 func (q Questions) ToJSON() []byte {
 	bytes, err := json.Marshal(q)
 	if err != nil {
-		log.Fatal(`Error: couldn't convert Questions to JSON`)
+		log.Fatal(`Error: couldn't convert Questions struct to JSON`)
 	}
 	return bytes
 }

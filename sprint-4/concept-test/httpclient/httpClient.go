@@ -14,6 +14,7 @@ func main() {
 	if err != nil {
 		log.Fatal(`Error: couldn't GET from localhost:9000`)
 	}
+	defer resp.Body.Close()
 
 	//read GET response
 	msg, err := ioutil.ReadAll(resp.Body)

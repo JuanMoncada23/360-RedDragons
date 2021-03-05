@@ -12,9 +12,9 @@ type Banks struct {
 
 //Bank struct represents one JSON-based quiz file
 type Bank struct {
-	Name       string `json:"name"`
-	ID         string `json:"id"`
-	QuestionCt int    `json:"questionCt"`
+	Name  string `json:"name"`
+	ID    string `json:"id"`
+	Count int    `json:"Count"`
 }
 
 //ToJSON method returns Banks struct as JSON []byte
