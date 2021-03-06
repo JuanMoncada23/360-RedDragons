@@ -6,9 +6,11 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"strings"
+	"time"
 )
 
 var idFileMap map[string]string = make(map[string]string)
@@ -55,32 +57,24 @@ func hello(res http.ResponseWriter, req *http.Request) {
 		log.Fatal(`Error: couldn't read POST request`)
 	}
 
-	//retrieve entries and convert to questions
+	//retrieve entries, convert to questions, shuffle answer choices
 	e := quizjson.FromFile(`../bank-1.json`)
 	q := quizjson.Questions{}
 	for _, entry := range e.Entries {
+
+		//shuffle question choices between 5 and 30 times
+		rand.Seed(time.Now().UnixNano())
+		shaker := rand.Intn(26) + 5
+		for i := 0; i < shaker; i++ {
+			time.Sleep(time.Duration(50))
+			entry.Question.ShuffleChoices()
+		}
 		q.Questions = append(q.Questions, entry.Question)
 	}
 
 	//return in JSON format
 	msg = q.ToJSON()
 	io.WriteString(res, string(msg))
-
-	/* //read GET request
-	defer req.Body.Close()
-
-	//retrieve entries
-	e := quizjson.FromFile(`../bank-1.json`)
-
-	//convert to questions
-	q := quizjson.Questions{}
-	for _, entry := range e.Entries {
-		q.Questions = append(q.Questions, entry.Question)
-	}
-
-	//return in JSON format
-	content := q.ToJSON()
-	io.WriteString(res, string(content)) */
 }
 
 func main() {

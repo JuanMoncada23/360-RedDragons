@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
+	"time"
 )
 
 //Questions struct represents a set of JSON-based quiz questions
@@ -24,6 +26,36 @@ func (q Question) String() string {
 		retStr += i + "\n"
 	}
 	return fmt.Sprintf(retStr)
+}
+
+//ShuffleChoices method randomly shuffles the ordering of choices
+func (q *Question) ShuffleChoices() {
+	//prep random number generator
+	rand.Seed(time.Now().UnixNano())
+
+	//copy q.Choices into temporary slice
+	tmpChoice := make([]string, len(q.Choices))
+	for i, choice := range q.Choices {
+		tmpChoice[i] = choice
+	}
+
+	for i := range q.Choices {
+		//choose random index into tmpChoice
+		choice := rand.Intn(int(time.Now().UnixNano())) % len(tmpChoice)
+		q.Choices[i] = tmpChoice[choice]
+
+		//remove value at index `choice` in tmpChoice
+		if choice == 0 {
+			tmpChoice = tmpChoice[1:]
+		} else if choice == len(tmpChoice)-1 {
+			tmpChoice = tmpChoice[:len(tmpChoice)-1]
+		} else {
+			lo := tmpChoice[:choice]
+			hi := tmpChoice[choice+1:]
+			tmpChoice = lo
+			tmpChoice = append(tmpChoice, hi...)
+		}
+	}
 }
 
 //ToJSON method returns Questions struct as JSON []byte
