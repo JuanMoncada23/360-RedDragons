@@ -6,7 +6,6 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 	"strings"
@@ -31,7 +30,7 @@ func init() {
 			idFileMap[e.ID] = filename
 		}
 	}
-	fmt.Println("done")
+	fmt.Println("ready")
 }
 
 func info(res http.ResponseWriter, req *http.Request) {
@@ -56,29 +55,33 @@ func hello(res http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Fatal(`Error: couldn't read POST request`)
 	}
+	jsonReq := quizjson.ToReqJSON(msg)
 
-	//retrieve entries, convert to questions, shuffle answer choices
-	e := quizjson.FromFile(`../bank-1.json`)
+	//retrieve entries according to request
 	q := quizjson.Questions{}
-	for _, entry := range e.Entries {
+	for _, id := range jsonReq.IDs {
+		//step through each entry in file
+		e := quizjson.FromFile(idFileMap[id])
 
-		//shuffle question choices between 5 and 30 times
-		rand.Seed(time.Now().UnixNano())
-		shaker := rand.Intn(26) + 5
-		for i := 0; i < shaker; i++ {
-			time.Sleep(time.Duration(50))
+		for _, entry := range e.Entries {
+			//shuffle question choices twice for randomness
+			time.Sleep(time.Duration(25))
 			entry.Question.ShuffleChoices()
-		}
-		q.Questions = append(q.Questions, entry.Question)
-	}
+			time.Sleep(time.Duration(25))
+			entry.Question.ShuffleChoices()
 
-	//return in JSON format
+			//add questions to question set
+			q.Questions = append(q.Questions, entry.Question)
+		}
+	}
+	q.ShuffleQuestions()
+
 	msg = q.ToJSON()
 	io.WriteString(res, string(msg))
 }
 
 func main() {
-	http.HandleFunc(`/`, hello)
-	http.HandleFunc(`/info`, info)
+	http.HandleFunc(`/req`, hello)
+	http.HandleFunc(`/`, info)
 	http.ListenAndServe(`:9000`, nil)
 }

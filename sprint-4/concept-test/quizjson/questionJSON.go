@@ -67,6 +67,36 @@ func (q Questions) ToJSON() []byte {
 	return bytes
 }
 
+//ShuffleQuestions method randomly shuffles the ordering of Entries
+func (q *Questions) ShuffleQuestions() {
+	//prep random number generator
+	rand.Seed(time.Now().UnixNano())
+
+	//copy q.Questions into temp slice
+	tmpQ := make([]Question, len(q.Questions))
+	for i, question := range q.Questions {
+		tmpQ[i] = question
+	}
+
+	for i := range q.Questions {
+		//choose random index into tmpEntry
+		choice := rand.Intn(int(time.Now().UnixNano())) % len(tmpQ)
+		q.Questions[i] = tmpQ[choice]
+
+		//remove value at index `choice` in tmpQ
+		if choice == 0 {
+			tmpQ = tmpQ[1:]
+		} else if choice == len(tmpQ)-1 {
+			tmpQ = tmpQ[:len(tmpQ)-1]
+		} else {
+			lo := tmpQ[:choice]
+			hi := tmpQ[choice+1:]
+			tmpQ = lo
+			tmpQ = append(tmpQ, hi...)
+		}
+	}
+}
+
 //ToQuestionSet function returns JSON []byte as Questions struct
 func ToQuestionSet(bytes []byte) Questions {
 	var q Questions
