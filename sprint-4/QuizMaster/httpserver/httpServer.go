@@ -1,22 +1,23 @@
 package main
 
 import (
-	"360-RedDragons/sprint-4/concept-test/quizjson"
+	"360-RedDragons/sprint-4/QuizMaster/quizjson"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"strings"
-	"time"
 )
 
 var idFileMap map[string]string = make(map[string]string)
 
 func init() {
+	banksDir := `..\banks`
 	//open parent directory
-	files, err := ioutil.ReadDir(`..`)
+	files, err := ioutil.ReadDir(banksDir)
 	if err != nil {
 		log.Fatal(`Error: couldn't read JSON directory`)
 	}
@@ -25,12 +26,13 @@ func init() {
 	for _, fi := range files {
 		if strings.Contains(fi.Name(), `.json`) {
 			//associate each bank id w/ filename in global map
-			filename := `..` + string(os.PathSeparator) + fi.Name()
+			filename := banksDir + string(os.PathSeparator) + fi.Name()
+			fmt.Println(`Found:`, filename)
 			e := quizjson.FromFile(filename)
 			idFileMap[e.ID] = filename
 		}
 	}
-	fmt.Println("ready")
+	fmt.Println("READY")
 }
 
 func info(res http.ResponseWriter, req *http.Request) {
@@ -59,23 +61,21 @@ func hello(res http.ResponseWriter, req *http.Request) {
 
 	//retrieve entries according to request
 	q := quizjson.Questions{}
-	for _, id := range jsonReq.IDs {
-		//step through each entry in file
+	for i, id := range jsonReq.IDs {
+		//get entries from file
 		e := quizjson.FromFile(idFileMap[id])
 
-		for _, entry := range e.Entries {
-			//shuffle question choices twice for randomness
-			time.Sleep(time.Duration(25))
-			entry.Question.ShuffleChoices()
-			time.Sleep(time.Duration(25))
-			entry.Question.ShuffleChoices()
-
-			//add questions to question set
-			q.Questions = append(q.Questions, entry.Question)
+		//apply a random subset of size jsonReq.Count from e.Entries
+		selected := rand.Perm(len(e.Entries))[:jsonReq.Count[i]]
+		for _, indx := range selected {
+			//apply subset
+			e.Entries[indx].Question.ShuffleChoices()
+			q.Questions = append(q.Questions, e.Entries[indx].Question)
 		}
 	}
-	q.ShuffleQuestions()
 
+	//shuffle question set
+	q.ShuffleQuestions()
 	msg = q.ToJSON()
 	io.WriteString(res, string(msg))
 }

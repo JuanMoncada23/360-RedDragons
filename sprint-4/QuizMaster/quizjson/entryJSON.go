@@ -27,7 +27,7 @@ func (e Entry) String() string {
 	return fmt.Sprintf(retStr)
 }
 
-//FromFile function returns contents of filepath JSON as an Entries struct
+//FromFile function decodes a .json filepath into an Entries struct
 func FromFile(filepath string) Entries {
 	//open and read file
 	bytes, err := ioutil.ReadFile(filepath)
