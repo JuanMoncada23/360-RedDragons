@@ -1,7 +1,7 @@
 package main
 
 import (
-	"360-RedDragons/sprint-4/QuizMaster/quizjson"
+	"QuizMaster/quizjson"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -15,7 +15,7 @@ import (
 var idFileMap map[string]string = make(map[string]string)
 
 func init() {
-	banksDir := `..\banks`
+	banksDir := `..` + string(os.PathSeparator) + `banks`
 	//open parent directory
 	files, err := ioutil.ReadDir(banksDir)
 	if err != nil {

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"360-RedDragons/sprint-4/QuizMaster/quizjson"
+	"QuizMaster/quizjson"
 	"bytes"
 	"fmt"
 	"io/ioutil"
